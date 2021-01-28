@@ -372,16 +372,17 @@ module Rack
 
         def commit_session(req, res)
           session = req.get_header RACK_SESSION
-          Rails.logger.info "========== session: #{session.inspect}"
           options = session.options
-          Rails.logger.info "========== options: #{options.inspect}"
 
           if options[:drop] || options[:renew]
+            Rails.logger.info "========== drop or renew"
             session_id = delete_session(req, session.id || generate_sid, options)
             return unless session_id
           end
-
+          Rails.logger.info "========== commit_session? before"
           return unless commit_session?(req, session, options)
+          Rails.logger.info "========== commit_session? after"
+          Rails.logger.info "========== loaded_session?: #{loaded_session?(session)}"
 
           session.send(:load!) unless loaded_session?(session)
           session_id ||= session.id
@@ -402,7 +403,9 @@ module Rack
             else
               cookie[:same_site] = @same_site
             end
+            Rails.logger.info "========== set_cookie before, cookie: #{cookie}, #{options: options.as_json}"
             set_cookie(req, res, cookie.merge!(options))
+            Rails.logger.info "========== set_cookie after"
           end
         end
         public :commit_session

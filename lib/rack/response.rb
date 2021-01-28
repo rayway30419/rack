@@ -211,6 +211,7 @@ module Rack
 
       def set_cookie(key, value)
         cookie_header = get_header SET_COOKIE
+        Rails.logger.info "===============set_cookie #{cookie_header}, #{key}, #{value}, #{::Rack::Utils.add_cookie_to_header(cookie_header, key, value)}"
         set_header SET_COOKIE, ::Rack::Utils.add_cookie_to_header(cookie_header, key, value)
       end
 
