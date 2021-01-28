@@ -403,7 +403,7 @@ module Rack
             else
               cookie[:same_site] = @same_site
             end
-            Rails.logger.info "========== set_cookie before, cookie: #{cookie}, #{options: options.as_json}"
+            Rails.logger.info "========== set_cookie before, cookie: #{cookie}, options: #{options.as_json}"
             set_cookie(req, res, cookie.merge!(options))
             Rails.logger.info "========== set_cookie after"
           end
