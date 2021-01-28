@@ -372,9 +372,9 @@ module Rack
 
         def commit_session(req, res)
           session = req.get_header RACK_SESSION
-          Rails.logger.info "========== session: #{session}"
+          Rails.logger.info "========== session: #{session.inspect}"
           options = session.options
-          Rails.logger.info "========== options: #{options}"
+          Rails.logger.info "========== options: #{options.inspect}"
 
           if options[:drop] || options[:renew]
             session_id = delete_session(req, session.id || generate_sid, options)
