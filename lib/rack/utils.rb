@@ -217,6 +217,7 @@ module Rack
     end
 
     def add_cookie_to_header(header, key, value)
+      Rails.logger.info "============== add_cookie_to_header #{header}, #{key}, #{value}"
       case value
       when Hash
         domain  = "; domain=#{value[:domain]}"   if value[:domain]
